@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect, useMemo, useState } from 'react';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, CheckCircle, Shield, Star, Clock, Hammer } from 'lucide-react';
@@ -8,6 +10,22 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 export default function Home() {
+  const [titleNumber, setTitleNumber] = useState(0);
+  const titles = useMemo(
+    () => ["Master Craftsmanship", "Beautiful Roofing", "10 Year Guarantee", "The Best Roofs"],
+    []
+  );
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (titleNumber === titles.length - 1) {
+        setTitleNumber(0);
+      } else {
+        setTitleNumber(titleNumber + 1);
+      }
+    }, 2000);
+    return () => clearTimeout(timeoutId);
+  }, [titleNumber, titles]);
   const services = [
     {
       title: 'New Roofing',
@@ -67,9 +85,31 @@ export default function Home() {
           <div className="animate-in fade-in slide-in-from-bottom-8 duration-1000">
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
               Protecting Auckland Homes with <br />
-              <span className="text-gradient-gold">Master Craftsmanship</span>
+              <span className="relative flex w-full justify-center items-center overflow-hidden text-center py-8 md:py-12 min-h-[120px] md:min-h-[160px]">
+                {titles.map((title, index) => (
+                  <motion.span
+                    key={index}
+                    className="absolute font-bold text-gradient-gold"
+                    initial={{ opacity: 0, y: -100 }}
+                    transition={{ type: "spring", stiffness: 50 }}
+                    animate={
+                      titleNumber === index
+                        ? {
+                          y: 0,
+                          opacity: 1,
+                        }
+                        : {
+                          y: titleNumber > index ? -150 : 150,
+                          opacity: 0,
+                        }
+                    }
+                  >
+                    {title}
+                  </motion.span>
+                ))}
+              </span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto mt-4">
               10-Year Guarantee. Family Owned. Quality You Can Trust.
             </p>
             <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
