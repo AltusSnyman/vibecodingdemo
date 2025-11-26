@@ -275,7 +275,7 @@ export default function Home() {
           <div className="max-w-3xl mx-auto bg-white rounded-lg overflow-hidden shadow-2xl">
             <iframe
               src="https://api.leadconnectorhq.com/widget/booking/2guXaEgOKXBAiRsPiBjc"
-              style={{ width: '100%', border: 'none', overflow: 'hidden', minHeight: '600px' }}
+              style={{ width: '100%', border: 'none', overflow: 'hidden', minHeight: '900px' }}
               scrolling="no"
               id="2guXaEgOKXBAiRsPiBjc_1764019789525"
             />
